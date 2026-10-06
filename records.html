@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RECORDS // SHIP_IT</title>
+    <link rel="icon" href="./favicon.ico" />
+    <script src="./assets/gate.js"></script>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #08080a;
+        color: #f1ede4;
+        font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.7;
+        padding: 54px 20px;
+      }
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        width: 18px;
+        height: 18px;
+        border: 0 solid rgba(241, 237, 228, 0.3);
+        pointer-events: none;
+      }
+      body::before { top: 12px; left: 12px; border-top-width: 1px; border-left-width: 1px; }
+      body::after { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
+      main { max-width: 700px; margin: 0 auto; }
+      h1 {
+        font-family: "Anton", "Space Grotesk", sans-serif;
+        font-weight: 400;
+        font-size: clamp(36px, 9vw, 62px);
+        line-height: 0.94;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      h1::after {
+        content: "";
+        display: block;
+        width: 72px;
+        height: 7px;
+        background: #ff4b2b;
+        margin-top: 16px;
+      }
+      .sub {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #747065;
+        margin: 16px 0 26px;
+      }
+      .sub::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background: #ff4b2b;
+        flex: 0 0 auto;
+      }
+      .rule {
+        border-left: 3px solid #ff4b2b;
+        background: #111116;
+        padding: 15px 17px;
+        color: #aaa598;
+        font-size: 14.5px;
+        margin-bottom: 26px;
+      }
+      form { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+      .grow { flex: 1 1 240px; }
+      label {
+        display: block;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #747065;
+        margin-bottom: 8px;
+      }
+      input {
+        width: 100%;
+        background: #08080a;
+        color: #f1ede4;
+        border: 0;
+        border-bottom: 2px solid rgba(241, 237, 228, 0.3);
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 16px;
+        padding: 12px 2px;
+        border-radius: 0;
+      }
+      input:focus { outline: none; border-bottom-color: #ff4b2b; }
+      button {
+        background: #ff4b2b;
+        color: #08080a;
+        border: 1px solid #ff4b2b;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 15px 22px;
+        min-height: 46px;
+        cursor: pointer;
+      }
+      button:hover { background: #f1ede4; border-color: #f1ede4; }
+      .query {
+        margin-top: 24px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 12.5px;
+        color: #aaa598;
+        background: #111116;
+        border: 1px solid #c7c1af;
+        padding: 11px 13px;
+        overflow-wrap: anywhere;
+      }
+      .query b { color: #ff4b2b; font-weight: 700; }
+      table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+      th, td { text-align: left; padding: 12px 11px; border-bottom: 1px solid #c7c1af; vertical-align: top; }
+      th {
+        background: #f1ede4;
+        color: #08080a;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        border-bottom: 0;
+      }
+      th:first-child { padding-left: 12px; }
+      td { overflow-wrap: anywhere; }
+      tr:first-child td { border-top: 2px solid #f1ede4; }
+      .empty { color: #747065; font-size: 14px; margin-top: 16px; }
+      .flag {
+        background: #f1ede4;
+        color: #08080a;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 16px;
+        letter-spacing: 0.05em;
+        padding: 15px 13px;
+        box-shadow: inset 5px 0 0 #ff8767;
+      }
+      .back {
+        display: inline-block;
+        margin-top: 34px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #747065;
+        text-decoration: none;
+        border-bottom: 1px solid #ff4b2b;
+        padding-bottom: 3px;
+      }
+      .back:hover { color: #ff4b2b; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>DELIVERY RECORDS</h1>
+      <p class="sub">ARCHIVE LOOKUP // READ ONLY</p>
+      <div class="rule">
+        Look up a consignment by its reference. The lookup builds a query string from whatever you
+        type and runs it against the local archive table. There is no server behind it.
+      </div>
+
+      <form id="lookup-form" autocomplete="off">
+        <div class="grow">
+          <label for="doc">REFERENCE</label>
+          <input id="doc" name="doc" type="text" value="INV-1004" />
+        </div>
+        <button type="submit">LOOK UP</button>
+      </form>
+
+      <div class="query" id="query"></div>
+      <div id="out"></div>
+
+      <a class="back" href="./index.html">RETURN TO SURFACE</a>
+    </main>
+
+    <script>
+      (function () {
+        var table = [
+          { id: "INV-1001", to: "lab store", qty: 4, state: "delivered" },
+          { id: "INV-1002", to: "workshop", qty: 12, state: "delivered" },
+          { id: "INV-1003", to: "field kit", qty: 2, state: "in transit" },
+          { id: "INV-1004", to: "control desk", qty: 7, state: "in transit" },
+          { id: "INV-1005", to: "spares", qty: 31, state: "held" },
+          { id: "INV-1000", to: "internal audit", qty: 1, state: "sealed", note: "QU4gSUQgSVMgTk9UIEEgUEFTU1dPUkQ=" }
+        ];
+
+        function evalWhere(where) {
+          var cleaned = where.replace(/--.*$/, "");
+          var parts = cleaned.split(/\s+OR\s+/i);
+          return function (row) {
+            for (var i = 0; i < parts.length; i += 1) {
+              var p = parts[i];
+              var m = /^\s*id\s*=\s*'([^']*)'\s*$/.exec(p);
+              if (m && row.id === m[1]) return true;
+              if (/^\s*1\s*=\s*1\s*$/.test(p)) return true;
+            }
+            return false;
+          };
+        }
+
+        var out = document.getElementById("out");
+        var queryBox = document.getElementById("query");
+
+        function clearOut() {
+          while (out.firstChild) out.removeChild(out.firstChild);
+        }
+
+        function render(rows) {
+          clearOut();
+          if (!rows.length) {
+            var p = document.createElement("p");
+            p.className = "empty";
+            p.textContent = "no matching consignment.";
+            out.appendChild(p);
+            return;
+          }
+          var table2 = document.createElement("table");
+          var thead = document.createElement("thead");
+          var hrow = document.createElement("tr");
+          ["REFERENCE", "DESTINATION", "QTY", "STATE"].forEach(function (h) {
+            var th = document.createElement("th");
+            th.textContent = h;
+            hrow.appendChild(th);
+          });
+          thead.appendChild(hrow);
+          table2.appendChild(thead);
+
+          var tbody = document.createElement("tbody");
+          rows.forEach(function (r) {
+            var tr = document.createElement("tr");
+            [r.id, r.to, r.qty, r.state].forEach(function (v) {
+              var td = document.createElement("td");
+              td.textContent = String(v);
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+            if (r.note) {
+              var noteRow = document.createElement("tr");
+              var cell = document.createElement("td");
+              cell.colSpan = 4;
+              cell.className = "flag";
+              var phrase = atob(r.note);
+              cell.textContent = phrase;
+              noteRow.appendChild(cell);
+              tbody.appendChild(noteRow);
+              stash(phrase);
+            }
+          });
+          table2.appendChild(tbody);
+          out.appendChild(table2);
+        }
+
+        function stash(phrase) {
+          try {
+            var raw = localStorage.getItem("drop.marks");
+            var obj = raw ? JSON.parse(raw) : {};
+            if (!obj || typeof obj !== "object") obj = {};
+            obj["5"] = phrase;
+            localStorage.setItem("drop.marks", JSON.stringify(obj));
+          } catch (e) {}
+        }
+
+        function run(raw) {
+          var where = "id = '" + raw + "'";
+          while (queryBox.firstChild) queryBox.removeChild(queryBox.firstChild);
+          queryBox.appendChild(document.createTextNode("SELECT * FROM deliveries WHERE "));
+          var b = document.createElement("b");
+          b.textContent = where;
+          queryBox.appendChild(b);
+          var predicate = evalWhere(where);
+          render(table.filter(predicate));
+        }
+
+        document.getElementById("lookup-form").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          run(document.getElementById("doc").value);
+        });
+
+        try {
+          var preset = new URLSearchParams(location.search).get("doc");
+          if (preset) document.getElementById("doc").value = preset;
+        } catch (e) {}
+
+        run(document.getElementById("doc").value);
+      })();
+    </script>
+  </body>
+</html>

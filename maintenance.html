@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MAINTENANCE // SHIP_IT</title>
+    <link rel="icon" href="./favicon.ico" />
+    <script src="./assets/gate.js"></script>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #08080a;
+        color: #f1ede4;
+        font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.7;
+        padding: 54px 20px;
+      }
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        width: 18px;
+        height: 18px;
+        border: 0 solid rgba(241, 237, 228, 0.3);
+        pointer-events: none;
+      }
+      body::before { top: 12px; left: 12px; border-top-width: 1px; border-left-width: 1px; }
+      body::after { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
+      main { max-width: 620px; margin: 0 auto; }
+      h1 {
+        font-family: "Anton", "Space Grotesk", sans-serif;
+        font-weight: 400;
+        font-size: clamp(36px, 9vw, 62px);
+        line-height: 0.94;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      h1::after {
+        content: "";
+        display: block;
+        width: 72px;
+        height: 7px;
+        background: #ff4b2b;
+        margin-top: 16px;
+      }
+      .sub {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #747065;
+        margin: 16px 0 26px;
+      }
+      .sub::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background: #ff4b2b;
+        flex: 0 0 auto;
+      }
+      .rule {
+        border-left: 3px solid #ff4b2b;
+        background: #111116;
+        padding: 15px 17px;
+        color: #aaa598;
+        font-size: 14.5px;
+        margin-bottom: 28px;
+      }
+      label {
+        display: block;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #747065;
+        margin-bottom: 8px;
+      }
+      input {
+        width: 100%;
+        background: #08080a;
+        color: #f1ede4;
+        border: 0;
+        border-bottom: 2px solid rgba(241, 237, 228, 0.3);
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 16px;
+        padding: 12px 2px;
+        border-radius: 0;
+      }
+      input:focus { outline: none; border-bottom-color: #ff4b2b; }
+      button {
+        margin-top: 18px;
+        background: #ff4b2b;
+        color: #08080a;
+        border: 1px solid #ff4b2b;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 15px 22px;
+        cursor: pointer;
+      }
+      button:hover { background: #f1ede4; border-color: #f1ede4; }
+      #staff {
+        margin-top: 26px;
+        border: 1px solid rgba(241, 237, 228, 0.16);
+        background: #f1ede4;
+        color: #08080a;
+        padding: 16px 18px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 17px;
+        letter-spacing: 0.06em;
+        word-break: break-word;
+      }
+      #staff.denied {
+        background: #08080a;
+        color: #ff4b2b;
+        border-color: #ff4b2b;
+        font-size: 14px;
+      }
+      #staff.ok { box-shadow: inset 5px 0 0 #ff8767; }
+      #staff .muted {
+        display: block;
+        margin-top: 10px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: rgba(241, 237, 228, 0.5);
+      }
+      #staff.denied .muted { color: #747065; }
+      .back {
+        display: inline-block;
+        margin-top: 34px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #747065;
+        text-decoration: none;
+        border-bottom: 1px solid #ff4b2b;
+        padding-bottom: 3px;
+      }
+      a:hover { color: #ff4b2b; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>SCHEDULED MAINTENANCE</h1>
+      <p class="sub">BUILD 02 // STATIC SURFACE // NO DATABASE</p>
+      <div class="rule">
+        Public pages stay up for the whole window. Access logs are staff only.
+        This build still checks clearance in the browser, which is a decision someone made in a hurry
+        and nobody has had time to undo.
+      </div>
+
+      <form id="staff-form" autocomplete="off">
+        <label for="clearance">CLEARANCE LEVEL</label>
+        <input id="clearance" name="clearance" type="text" />
+        <button type="submit">CONTINUE</button>
+      </form>
+
+      <aside id="staff" hidden></aside>
+
+      <a class="back" href="./index.html">RETURN TO SURFACE</a>
+    </main>
+
+    <script>
+      (function () {
+        var A = "VEhFIExPQ0sgSVMg";
+        var B = "SU4gVEhFIEZPUk0=";
+        var form = document.getElementById("staff-form");
+        var box = document.getElementById("clearance");
+        var panel = document.getElementById("staff");
+
+        try {
+          var preset = new URLSearchParams(location.search).get("clearance");
+          if (preset) box.value = preset;
+        } catch (e) {}
+
+        function stash(phrase) {
+          try {
+            var raw = localStorage.getItem("drop.marks");
+            var obj = raw ? JSON.parse(raw) : {};
+            if (!obj || typeof obj !== "object") obj = {};
+            obj["3"] = phrase;
+            localStorage.setItem("drop.marks", JSON.stringify(obj));
+          } catch (e) {}
+        }
+
+        function show(className, text) {
+          panel.hidden = false;
+          panel.className = className;
+          while (panel.firstChild) panel.removeChild(panel.firstChild);
+          panel.appendChild(document.createTextNode(text));
+        }
+
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var value = box.value.trim().toLowerCase();
+          if (value !== "root") {
+            show("denied", "DENIED // clearance '" + value + "' is not on the staff list.");
+            return;
+          }
+          var phrase = atob(A) + atob(B);
+          stash(phrase);
+          show("ok", phrase);
+          var note = document.createElement("span");
+          note.className = "muted";
+          note.textContent = "MARK SECURED // RETURN TO THE TERMINAL";
+          panel.appendChild(note);
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+/* live status marker used across the surface pages */
+
+.pulse {
+  position: relative;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 0;
+}
+
+.pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ff4b2b;
+}
+
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ff4b2b;
+  animation: pulse-wave 2.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+.pulse.is-warn::before {
+  background: #f1ede4;
+}
+
+.pulse.is-warn::after {
+  border-color: #f1ede4;
+}
+
+@keyframes pulse-wave {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.wall-mark::after {
+  content: "\0044 \0045 \0041 \0044 \0020 \0052 \0055 \004C \0045 \0053 \0020 \0053 \0054 \0049 \004C \004C \0020 \0053 \0050 \0045 \0041 \004B ";
+}

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; base-uri 'self'; form-action 'self'" />
+    <title>404 // SHIP_IT</title>
+    <link rel="icon" href="./favicon.ico" />
+    <script>
+      (function () {
+        var OPEN = "2026-10-06T21:00:00Z";
+        var CLOSE = "2026-10-07T00:00:00Z";
+        var openAt = Date.parse(OPEN);
+        var closeAt = Date.parse(CLOSE);
+        var at = Date.now();
+        var host = location.hostname;
+        var local = host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "[::1]" || host === "";
+        if (local) {
+          try {
+            var raw = new URLSearchParams(location.search).get("now");
+            if (raw) {
+              var parsed = Date.parse(raw);
+              if (!isNaN(parsed)) at = parsed;
+            }
+          } catch (err) {}
+        }
+        if (at >= openAt && at < closeAt) return;
+        var parts = location.pathname.split("/");
+        var root = /\.github\.io$/.test(location.hostname) && parts[1] ? "/" + parts[1] : "";
+        location.replace(root + "/index.html" + location.search);
+      })();
+    </script>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #08080a;
+        color: #f1ede4;
+        font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+        font-weight: 500;
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>");
+        opacity: 0.14;
+        mix-blend-mode: overlay;
+      }
+      .box {
+        border: 1px solid rgba(241, 237, 228, 0.16);
+        background: #111116;
+        padding: clamp(24px, 6vw, 54px);
+        max-width: 560px;
+        width: calc(100% - 32px);
+        text-align: left;
+        position: relative;
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.65);
+      }
+      .box::before,
+      .box::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 0 solid #ff4b2b;
+      }
+      .box::before { top: 9px; left: 9px; border-top-width: 2px; border-left-width: 2px; }
+      .box::after { bottom: 9px; right: 9px; border-bottom-width: 2px; border-right-width: 2px; }
+      .code {
+        font-family: "Anton", "Space Grotesk", sans-serif;
+        font-weight: 400;
+        font-size: clamp(5rem, 26vw, 10rem);
+        line-height: 0.82;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        color: transparent;
+        -webkit-text-stroke: 3px #f1ede4;
+      }
+      .code::after {
+        content: "";
+        display: block;
+        width: 96px;
+        height: 8px;
+        background: #ff4b2b;
+        margin-top: 22px;
+        -webkit-text-stroke: 0;
+      }
+      .line {
+        margin-top: 22px;
+        color: #aaa598;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .frag {
+        display: inline-block;
+        margin-top: 22px;
+        background: #f1ede4;
+        color: #08080a;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        padding: 10px 15px;
+      }
+      .wall {
+        margin-top: 18px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        color: #747065;
+        text-transform: uppercase;
+      }
+      a {
+        display: inline-block;
+        margin-top: 26px;
+        background: #ff4b2b;
+        color: #08080a;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 1px solid #ff4b2b;
+        padding: 15px 20px;
+      }
+      a:hover { background: #f1ede4; border-color: #f1ede4; color: #08080a; }
+    </style>
+  </head>
+  <body>
+    <main class="box">
+      <div class="code">404</div>
+      <p class="line">
+        PATH NOT FOUND.<br />
+        This build serves a fixed set of routes and nothing else.<br />
+        Off-route requests get the wall.
+      </p>
+      <span class="frag">NO INDEX. NO CATCH-ALL.</span>
+      <p class="wall">// walking off the map is allowed. the map does not grow.</p>
+      <a id="home" href="./index.html">RETURN TO SURFACE</a>
+    </main>
+    <script>
+      (function () {
+        var parts = location.pathname.split("/");
+        if (/\.github\.io$/.test(location.hostname) && parts[1]) {
+          document.getElementById("home").href = "/" + parts[1] + "/index.html";
+        }
+      })();
+    </script>
+  </body>
+</html>

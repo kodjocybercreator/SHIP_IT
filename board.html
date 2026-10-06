@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NOTICEBOARD // SHIP_IT</title>
+    <link rel="icon" href="./favicon.ico" />
+    <script src="./assets/gate.js"></script>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #08080a;
+        color: #f1ede4;
+        font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.7;
+        padding: 54px 20px;
+      }
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        width: 18px;
+        height: 18px;
+        border: 0 solid rgba(241, 237, 228, 0.3);
+        pointer-events: none;
+      }
+      body::before { top: 12px; left: 12px; border-top-width: 1px; border-left-width: 1px; }
+      body::after { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
+      main { max-width: 640px; margin: 0 auto; }
+      h1 {
+        font-family: "Anton", "Space Grotesk", sans-serif;
+        font-weight: 400;
+        font-size: clamp(36px, 9vw, 62px);
+        line-height: 0.94;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      h1::after {
+        content: "";
+        display: block;
+        width: 72px;
+        height: 7px;
+        background: #ff4b2b;
+        margin-top: 16px;
+      }
+      .sub {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #747065;
+        margin: 16px 0 26px;
+      }
+      .sub::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background: #ff4b2b;
+        flex: 0 0 auto;
+      }
+      .rule {
+        border-left: 3px solid #ff4b2b;
+        background: #111116;
+        padding: 15px 17px;
+        color: #aaa598;
+        font-size: 14.5px;
+        margin-bottom: 26px;
+      }
+      .rule b { color: #f1ede4; font-weight: 700; }
+      textarea {
+        width: 100%;
+        background: #08080a;
+        color: #f1ede4;
+        border: 0;
+        border-bottom: 2px solid rgba(241, 237, 228, 0.3);
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 15px;
+        line-height: 1.7;
+        padding: 12px 2px;
+        resize: vertical;
+        border-radius: 0;
+      }
+      textarea::placeholder { color: #747065; letter-spacing: 0.1em; }
+      textarea:focus { outline: none; border-bottom-color: #ff4b2b; }
+      button {
+        margin-top: 16px;
+        background: #ff4b2b;
+        color: #08080a;
+        border: 1px solid #ff4b2b;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 15px 22px;
+        cursor: pointer;
+      }
+      button:hover { background: #f1ede4; border-color: #f1ede4; }
+      #board { margin-top: 32px; border-top: 2px solid #f1ede4; }
+      .row { padding: 15px 0; border-bottom: 1px solid #c7c1af; overflow-wrap: anywhere; }
+      .who {
+        color: #747065;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .who::before { content: "< "; color: #ff4b2b; }
+      .who::after { content: " >"; color: #ff4b2b; }
+      .body { color: #f1ede4; }
+      #note {
+        display: none;
+        margin-top: 26px;
+        border: 1px solid rgba(241, 237, 228, 0.16);
+        background: #f1ede4;
+        color: #08080a;
+        padding: 16px 18px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 17px;
+        letter-spacing: 0.06em;
+        word-break: break-word;
+        box-shadow: inset 5px 0 0 #ff8767;
+      }
+      #note .muted {
+        display: block;
+        margin-top: 10px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: rgba(241, 237, 228, 0.5);
+      }
+      .back {
+        display: inline-block;
+        margin-top: 34px;
+        font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #747065;
+        text-decoration: none;
+        border-bottom: 1px solid #ff4b2b;
+        padding-bottom: 3px;
+      }
+      .back:hover { color: #ff4b2b; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>NOTICEBOARD</h1>
+      <p class="sub">OPEN BOARD // MODERATION OFF</p>
+      <div class="rule">
+        House rule: notices are printed <b>exactly</b> as they are written. No filters, no escaping,
+        no review queue. The board is happy to print anything you give it.
+      </div>
+
+      <form id="post-form">
+        <textarea id="entry" rows="3" maxlength="300" placeholder="write a notice"></textarea>
+        <br />
+        <button type="submit">POST</button>
+      </form>
+
+      <section id="board" aria-label="notices"></section>
+      <aside id="note"></aside>
+
+      <a class="back" href="./index.html">RETURN TO SURFACE</a>
+    </main>
+
+    <script>
+      (function () {
+        var STORE = "drop.board.v1";
+        var seed = [
+          { who: "ama", text: "board is back up. keep the Meet link out of here." },
+          { who: "kwame", text: "someone left the clearance field on the maintenance page again." },
+          { who: "moderator", text: "moderation stays off. if your notice can run, I answer it. yes, really." }
+        ];
+
+        var entries;
+        try {
+          entries = JSON.parse(localStorage.getItem(STORE) || "null");
+        } catch (e) {
+          entries = null;
+        }
+        if (!Array.isArray(entries)) entries = seed.slice();
+
+        var board = document.getElementById("board");
+
+        function render() {
+          for (var i = board.children.length - 1; i >= 0; i -= 1) board.removeChild(board.children[i]);
+          for (var j = 0; j < entries.length; j += 1) {
+            var row = document.createElement("article");
+            row.className = "row";
+            var who = document.createElement("span");
+            who.className = "who";
+            who.textContent = entries[j].who;
+            row.appendChild(who);
+            var body = document.createElement("div");
+            body.className = "body";
+            /* DELIBERATE: this sink is lock 04 of the drop. do not "fix" it. */
+            body.insertAdjacentHTML("beforeend", entries[j].text);
+            row.appendChild(body);
+            board.appendChild(row);
+          }
+        }
+
+        document.getElementById("post-form").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var box = document.getElementById("entry");
+          var text = box.value.trim();
+          if (!text) return;
+          entries.push({ who: "you", text: text });
+          try {
+            localStorage.setItem(STORE, JSON.stringify(entries));
+          } catch (e) {}
+          box.value = "";
+          render();
+        });
+
+        var A = "VEhFIFBBR0UgVEhBVCBS";
+        var B = "RU5ERVJTIE9XTlMgSVQ=";
+
+        function stash(phrase) {
+          try {
+            var raw = localStorage.getItem("drop.marks");
+            var obj = raw ? JSON.parse(raw) : {};
+            if (!obj || typeof obj !== "object") obj = {};
+            obj["4"] = phrase;
+            localStorage.setItem("drop.marks", JSON.stringify(obj));
+          } catch (e) {}
+        }
+
+        window.noticeboard = {
+          open: function () {
+            var note = document.getElementById("note");
+            var phrase = atob(A) + atob(B);
+            stash(phrase);
+            while (note.firstChild) note.removeChild(note.firstChild);
+            note.style.display = "block";
+            note.appendChild(document.createTextNode(phrase));
+            var muted = document.createElement("span");
+            muted.className = "muted";
+            muted.textContent = "MARK SECURED // RETURN TO THE TERMINAL";
+            note.appendChild(muted);
+            document.title = "NOTICEBOARD // notice printed";
+          }
+        };
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
